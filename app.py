@@ -4,7 +4,7 @@ import requests
 # ========== CONFIG ==========
 GROQ_API_KEY = "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"  # 🔑 Paste your Groq API key here
 API_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL_NAME = "llama-3.1-70b-versatile"  # ✅ Change to your chosen Groq model
+MODEL_NAME = "llama-3.1-70b-versatile"  # ✅ Change if needed (Groq supports several)
 
 # ========== STREAMLIT UI ==========
 st.set_page_config(page_title="Groq Chatbot", layout="centered")
@@ -16,7 +16,7 @@ if "messages" not in st.session_state:
         {"role": "system", "content": "You are a helpful AI assistant."}
     ]
 
-# Sidebar
+# Sidebar controls
 with st.sidebar:
     st.header("⚙️ Settings")
     temperature = st.slider("Temperature", 0.0, 1.0, 0.5)
@@ -26,14 +26,14 @@ with st.sidebar:
         ]
         st.experimental_rerun()
 
-# Display messages
+# Display conversation
 for msg in st.session_state.messages:
     if msg["role"] == "user":
         st.markdown(f"🧑 **You:** {msg['content']}")
     elif msg["role"] == "assistant":
         st.markdown(f"🤖 **Bot:** {msg['content']}")
 
-# User input
+# User input area
 user_input = st.chat_input("Type your message...")
 
 if user_input:
@@ -64,4 +64,6 @@ if user_input:
             st.markdown(f"🤖 **Bot:** {bot_message}")
 
         except requests.exceptions.HTTPError as e:
-            st.error(f"❌ HTTP Error:
+            st.error(f"❌ HTTP Error {e.response.status_code}: {e.response.text}")
+        except Exception as e:
+            st.error(f"⚠️ Error: {e}")
