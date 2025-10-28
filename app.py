@@ -11,8 +11,8 @@ MODEL_NAME = "llama-3.1-70b-versatile"          # example model; change if neede
 API_URL = f"https://api.groq.com/openai/v1/chat/completions"
 
 # ========== STREAMLIT UI SETUP ==========
-st.set_page_config(page_title="Groq Chatbot", layout="centered")
-st.title("🤖 Groq Chatbot (Streamlit)")
+st.set_page_config(page_title="Zain Ul Islam Adil ChatBot", layout="centered")
+st.title("Zain Ul Islam Adil ChatBot")
 
 # Initialize session state
 if "messages" not in st.session_state:
