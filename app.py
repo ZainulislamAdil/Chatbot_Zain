@@ -3,29 +3,21 @@ import requests
 import json
 
 # ===========================
-# Streamlit App Configuration
+# CONFIGURATION
 # ===========================
 st.set_page_config(page_title="Groq Chatbot", page_icon="🤖", layout="centered")
 
+# 🔑 Embed your Groq API key here
+API_KEY = "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"  # ← Replace with your actual API key
+
+# Default model (you can change it)
+MODEL_NAME = "llama3-70b-8192"
+
+# ===========================
+# UI HEADER
+# ===========================
 st.title("🤖 Groq Chatbot")
 st.caption("Chatbot powered by Groq large language models — built by Zain Ul Islam Adil")
-
-# ===========================
-# Sidebar for API Key & Model
-# ===========================
-st.sidebar.header("⚙️ Configuration")
-api_key = st.sidebar.text_input("🔑 Enter your Groq API Key", type="password")
-
-model_name = st.sidebar.selectbox(
-    "🧠 Choose Model",
-    [
-        "llama3-70b-8192",
-        "llama3-8b-8192",
-        "mixtral-8x7b-32768",
-        "gemma-7b-it"
-    ],
-    index=0
-)
 
 # ===========================
 # Initialize Chat Memory
@@ -39,39 +31,36 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
 
 # ===========================
-# Chat Input Box
+# User Input
 # ===========================
 prompt = st.chat_input("Type your message here...")
 
 if prompt:
-    if not api_key:
-        st.warning("⚠️ Please enter your Groq API key in the sidebar.")
-        st.stop()
-
     # Show user message
     st.chat_message("user").markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
     try:
-        # Prepare API call
+        # Prepare request
         headers = {
-            "Authorization": f"Bearer {api_key}",
+            "Authorization": f"Bearer {API_KEY}",
             "Content-Type": "application/json"
         }
 
         payload = {
-            "model": model_name,
+            "model": MODEL_NAME,
             "messages": st.session_state.messages,
             "temperature": 0.7
         }
 
+        # Send request
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
             headers=headers,
             data=json.dumps(payload)
         )
 
-        # Handle Response
+        # Handle response
         if response.status_code != 200:
             st.error(f"❌ HTTP Error {response.status_code}: {response.text}")
         else:
