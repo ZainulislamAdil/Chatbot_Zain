@@ -5,7 +5,7 @@ import json
 # ===========================
 # CONFIGURATION
 # ===========================
-st.set_page_config(page_title="Groq Chatbot", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="Zain Ul Islam Adil Chatbot", page_icon="🤖", layout="centered")
 
 # Embed your Groq API key here
 API_KEY = "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"  # ← Replace with your actual key
@@ -16,8 +16,8 @@ MODEL_NAME = "llama-3.1-8b-instant"
 # ===========================
 # UI HEADER
 # ===========================
-st.title("🤖 Groq Chatbot")
-st.caption("Chatbot powered by Groq large language models")
+st.title("Zain Ul Islam Adil")
+st.caption("Chatbot powered by Groq developed by Zain Ul Islam Adil")
 
 # ===========================
 # Initialize Chat Memory
